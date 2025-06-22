@@ -1,0 +1,49 @@
+flowchart TD
+
+  subgraph API_Layer [API Layer]
+    Controller[Controller]
+  end
+
+  subgraph Mediator_Layer [Mediator Layer]
+    Mediator[Mediator ISender]
+  end
+
+  subgraph Handler_Layer [Handler Layer]
+    Handler[Handler]
+    Request[Request DTO]
+  end
+
+  subgraph Application_Layer [Application Layer]
+    AppService[Application Service]
+    AppContract[Contract / Interface]
+    AppEnum[Enum / Business Type]
+  end
+
+  subgraph Infrastructure_Layer [Infrastructure Layer]
+    ExternalClient[External Client]
+    Repository[Generic Repository]
+    Entity[JPA Entity]
+  end
+
+  subgraph Core_Layer [Core Layer]
+    Configs[Typed Configs]
+    ResponseUtils[Response Utils]
+    JsonUtils[Json Utils]
+    DateUtils[Date Utils]
+  end
+
+  %% === FLOW ===
+  Controller --> Mediator
+  Mediator --> Handler
+  Handler --> Request
+  Handler --> AppService
+  AppService --> AppContract
+  AppService --> AppEnum
+  AppService --> ExternalClient
+  AppService --> Repository
+  Repository --> Entity
+
+  AppService --> Configs
+  Controller --> ResponseUtils
+  AppService --> JsonUtils
+  AppService --> DateUtils

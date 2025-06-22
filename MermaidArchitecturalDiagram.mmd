@@ -1,0 +1,54 @@
+flowchart LR
+
+  subgraph Features Layer
+    direction TB
+    featuresControllers[Controllers]
+    featuresHandlers[Handlers]
+    featuresRequests[Requests]
+    featuresDTOs[DTOs / Models]
+    featuresTemplates[Templates - e.g. HTML]
+  end
+
+  subgraph Core Layer
+    direction TB
+    coreMediator[Mediator - Sender, Request, Handler]
+    coreResponse[Response Utilities]
+    coreJsonUtils[JSON Utilities]
+    coreDateUtils[Date/Time Utilities]
+    coreConfigs[Typed Configs]
+  end
+
+  subgraph Application Layer
+    direction TB
+    appServices[Application Services]
+    appContracts[Service Contracts]
+    appEnums[Business Types / Enums]
+  end
+
+  subgraph Infrastructure Layer
+    direction TB
+    infraClients[External Clients]
+    infraPersistence[Persistence - Entities & Repositories]
+    infraRegistry[Repository Registrar]
+  end
+
+  %% === Dependency Flow ===
+  featuresControllers --> coreMediator
+  coreMediator --> featuresHandlers
+  featuresHandlers --> appServices
+  appServices --> infraClients
+  appServices --> infraPersistence
+  appServices --> coreConfigs
+
+  featuresControllers --> featuresDTOs
+  featuresHandlers --> featuresRequests
+  featuresHandlers --> featuresDTOs
+
+  featuresControllers --> featuresTemplates
+
+  coreResponse --> featuresControllers
+  coreJsonUtils --> appServices
+  coreDateUtils --> appServices
+  coreConfigs --> appServices
+
+  infraRegistry --> infraPersistence

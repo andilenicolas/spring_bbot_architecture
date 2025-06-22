@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Health Status</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f0f0;
+            padding: 2em;
+        }
+
+        .status {
+            font-size: 1.2em;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>System Health</h1>
+    <div class="status">
+        <strong>Status:</strong> <span th:text="${status.status}">UP</span><br />
+        <strong>Description:</strong> <span th:text="${status.description}">Healthy</span>
+    </div>
+</body>
+
+</html>
